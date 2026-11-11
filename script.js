@@ -768,36 +768,49 @@ function supportingPage(path) {
   return null;
 }
 
-function renderPage(path) {
-  if (path === "/books") return bookCollectionPage();
-  if (path.startsWith("/books/")) return literaryBookPage(path.slice("/books/".length));
-  if (path === "/about") return aboutPage();
-  if (path === "/discussions") return discussionsPage();
-  if (path === "/events") return eventsPage();
-  if (path === "/join") return joinPage();
-  return supportingPage(path);
-}
 
 function renderRoute(path, push = false) {
-  const normalizedPath = path.replace(/\/+$/, "") || "/";
+  const basePath = location.hostname === "ojdevelop.github.io"
+    ? "/Ebook-website-2"
+    : "";
+
+  let appPath = path;
+
+  if (basePath && appPath.startsWith(basePath)) {
+    appPath = appPath.slice(basePath.length) || "/";
+  }
+
+  const normalizedPath = appPath.replace(/\/+$/, "") || "/";
   const normalized = normalizedPath === "/membership" ? "/join" : normalizedPath;
-  if (push && location.protocol !== "file:" && location.pathname !== normalized) history.pushState({}, "", normalized);
+
+  if (push && location.protocol !== "file:") {
+    const targetPath = `${basePath}${normalized === "/" ? "/" : normalized}`;
+    if (location.pathname !== targetPath) {
+      history.pushState({}, "", targetPath);
+    }
+  }
+
   const book = normalized.startsWith("/books/")
     ? literaryBooks.find((item) => `/books/${item.slug}` === normalized)
     : null;
+
   document.title = normalized === "/"
     ? "Everest Book Club — Where Great Stories Bring Us Together"
     : `${routeTitles[normalized] || book?.title || "Page not found"} — Everest Book Club`;
+
   document.querySelectorAll(".desktop-nav [data-route], .mobile-nav [data-route]").forEach((link) => {
     if (link.dataset.route === normalized) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
   });
+
   mainContent.innerHTML = normalized === "/"
     ? homeTemplate.innerHTML
     : renderPage(normalized) || `<section class="route-page"><div class="wrap"><p class="eyebrow">Everest Book Club</p><h1>This page is not on our shelf.</h1>${routeLink("/", "Return home", "button")}</div></section>`;
+
   window.scrollTo({ top: 0, behavior: "instant" });
   initHomeData();
 }
+
 
 function formatMilestoneCount(value, suffix) {
   return `${new Intl.NumberFormat("en-US").format(value)}${suffix}`;
