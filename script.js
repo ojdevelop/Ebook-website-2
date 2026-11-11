@@ -768,6 +768,15 @@ function supportingPage(path) {
   return null;
 }
 
+function renderPage(path) {
+  if (path === "/books") return bookCollectionPage();
+  if (path.startsWith("/books/")) return literaryBookPage(path.slice("/books/".length));
+  if (path === "/about") return aboutPage();
+  if (path === "/discussions") return discussionsPage();
+  if (path === "/events") return eventsPage();
+  if (path === "/join") return joinPage();
+  return supportingPage(path);
+}
 
 function renderRoute(path, push = false) {
   const basePath = location.hostname === "ojdevelop.github.io"
@@ -917,6 +926,16 @@ function initHomeData() {
   initializeMotion();
 }
 
+function setMobileMenuOpen(isOpen, restoreFocus = false) {
+  const mobileNav = document.getElementById("mobile-nav");
+  const menuToggle = document.querySelector(".menu-toggle");
+  mobileNav.classList.toggle("is-open", isOpen);
+  document.body.classList.toggle("menu-open", isOpen);
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+  if (!isOpen && restoreFocus) menuToggle.focus();
+}
+
 document.addEventListener("click", (event) => {
   const target = event.target;
   if (!(target instanceof Element)) return;
@@ -924,11 +943,7 @@ document.addEventListener("click", (event) => {
   if (link) {
     event.preventDefault();
     renderRoute(link.dataset.route, true);
-    document.getElementById("mobile-nav").classList.remove("is-open");
-    document.body.classList.remove("menu-open");
-    const menuToggle = document.querySelector(".menu-toggle");
-    menuToggle.setAttribute("aria-expanded", "false");
-    menuToggle.setAttribute("aria-label", "Open navigation menu");
+    setMobileMenuOpen(false);
     return;
   }
   const bookFilter = target.closest("[data-book-filter]");
@@ -990,20 +1005,18 @@ document.addEventListener("click", (event) => {
 });
 
 document.querySelector(".menu-toggle").addEventListener("click", (event) => {
-  const isOpen = document.getElementById("mobile-nav").classList.toggle("is-open");
-  document.body.classList.toggle("menu-open", isOpen);
-  event.currentTarget.setAttribute("aria-expanded", String(isOpen));
-  event.currentTarget.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+  setMobileMenuOpen(event.currentTarget.getAttribute("aria-expanded") !== "true");
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    document.getElementById("mobile-nav").classList.remove("is-open");
-    document.body.classList.remove("menu-open");
-    const menuToggle = document.querySelector(".menu-toggle");
-    menuToggle.setAttribute("aria-expanded", "false");
-    menuToggle.setAttribute("aria-label", "Open navigation menu");
+  if (event.key === "Escape" && document.querySelector(".menu-toggle").getAttribute("aria-expanded") === "true") {
+    setMobileMenuOpen(false, true);
   }
+});
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 780) setMobileMenuOpen(false);
+  else if (document.querySelector(".mobile-nav").classList.contains("is-open")) setMobileMenuOpen(true);
 });
 
 document.addEventListener("submit", (event) => {
