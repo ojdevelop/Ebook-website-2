@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1422">
+  <meta name="description" content="Discover extraordinary books, explore diverse literary voices, and connect with a community of readers at Everest Book Club.">
+  <title>Everest Book Club — Where Great Stories Bring Us Together</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <div class="announcement">
+      <span>Discover a world of stories, conversations &amp; extraordinary literary experiences.</span>
+    </div>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="/" data-route="/" aria-label="Everest Book Club home">
+          <svg class="brand-mark" viewBox="0 0 40 42" aria-hidden="true"><path d="M2 36 15 13l5 8 6-12 12 27H2Z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m11 36 9-15 5 8 2-4 6 11M20 21l4-7 4 9" fill="none" stroke="#c9a86a" stroke-width="1.5"/><path d="M5 39h30" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span><span class="brand-name">EVEREST</span><span class="brand-tag">Book Club</span></span>
+        </a>
+        <nav class="desktop-nav" aria-label="Main navigation">
+          <a href="/" data-route="/">Home</a><a href="/books" data-route="/books">Books</a><a href="/about" data-route="/about">About</a><a href="/discussions" data-route="/discussions">Discussions</a><a href="/events" data-route="/events">Events</a><a href="/join" data-route="/join">Join Us</a>
+        </nav>
+        <div class="header-actions">
+          <button class="icon-button menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="mobile-nav" id="mobile-nav">
+      <nav aria-label="Mobile navigation">
+        <a href="/" data-route="/">Home</a><a href="/books" data-route="/books">Books</a><a href="/about" data-route="/about">About</a><a href="/discussions" data-route="/discussions">Discussions</a><a href="/events" data-route="/events">Events</a><a href="/join" data-route="/join">Join Us</a>
+      </nav>
+    </div>
+
+    <main id="main-content">
+      <section class="hero">
+        <div class="wrap"><div class="hero-content">
+          <p class="eyebrow">A global book club for curious minds</p>
+          <h1>Stories take us <em>further.</em></h1>
+          <p class="hero-copy">Discover European, African, and Asian literature, meet the voices behind each book, and explore stories together with readers everywhere.</p>
+          <div class="hero-actions"><a class="button button--gold" href="/join" data-route="/join">Join Us <span aria-hidden="true">↗</span></a><a class="button button--light" href="/about" data-route="/about">Discover Everest</a></div>
+        </div>
+        <div class="hero-art" aria-label="Readers and books from around the world">
+          <span class="hero-kicker">A wider world in every story</span>
+          <div class="hero-photo hero-photo--main"><img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" alt="A reader discovering a book in warm afternoon light" fetchpriority="high"></div>
+          <div class="hero-photo hero-photo--detail"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&amp;fit=crop&amp;w=700&amp;q=82" alt="Readers sharing a conversation" fetchpriority="high"></div>
+          <div class="hero-art-note" aria-hidden="true"><strong>01</strong><span>book · many worlds</span></div>
+        </div></div>
+        <a class="hero-scroll" href="#featured-books"><span aria-hidden="true"></span>Scroll to discover</a>
+        <div class="hero-note">Read beyond the familiar</div>
+      </section>
+
+      <section class="collection" id="featured-books">
+        <div class="wrap">
+          <div class="section-head section-head--split"><div><p class="eyebrow">The reading shelf</p><h2>Books to open together.</h2></div><p class="section-intro">Explore sample current, upcoming, and previous reading ideas. These are examples, not a confirmed Everest reading schedule.</p></div>
+          <div class="reading-groups" id="reading-groups"></div>
+          <div class="section-action"><a class="button button--gold" href="/discussions" data-route="/discussions">Discuss a book <span aria-hidden="true">↗</span></a></div>
+        </div>
+      </section>
+
+      <section class="authors">
+        <div class="wrap">
+          <div class="section-head author-section-head"><p class="eyebrow">Featured authors &amp; books</p><h2>Featured Author Showcase</h2><p class="section-intro">Discover award-winning writers Jonathan Coe and Jim Crace, their acclaimed novels, and the stories behind their literary honors.</p></div>
+          <div class="author-grid" id="author-grid"></div>
+          <div class="section-action"><a class="button" href="#more-award-winners">Explore more award-winning books <span aria-hidden="true">↗</span></a></div>
+        </div>
+      </section>
+
+      <section class="award-winners" id="more-award-winners">
+        <div class="wrap">
+          <div class="section-head section-head--split"><div><p class="eyebrow">Literary excellence</p><h2>More Award Winners</h2></div><a class="text-link" href="/books" data-route="/books">View all <span aria-hidden="true">→</span></a></div>
+          <div class="award-winner-row" id="award-winner-row"></div>
+        </div>
+      </section>
+
+      <section class="milestones">
+        <div class="wrap">
+          <div class="section-head"><p class="eyebrow">Milestone achievements</p><h2>A community measured in stories.</h2><p class="section-intro">Community figures supplied for the Everest Book Club website.</p></div>
+          <div class="milestone-grid" id="milestone-grid"></div>
+          <div class="section-action"><a class="button" href="/discussions" data-route="/discussions">Join a discussion <span aria-hidden="true">↗</span></a></div>
+        </div>
+      </section>
+
+      <section class="monthly">
+        <div class="wrap">
+          <div class="section-head"><p class="eyebrow">Featured book</p><h2>A story of the lives we might have lived.</h2></div>
+          <article class="monthly-panel ragamuffin-panel">
+            <div class="monthly-art ragamuffin-art" aria-label="The Midnight Library book cover showcase">
+              <img class="ragamuffin-backdrop" src="https://images-na.ssl-images-amazon.com/images/P/0525559477.01._SCLZZZZZZZ_.jpg" alt="" aria-hidden="true">
+              <div class="book-frame">
+                <div class="ragamuffin-book">
+                  <img class="ragamuffin-cover" src="https://images-na.ssl-images-amazon.com/images/P/0525559477.01._SCLZZZZZZZ_.jpg" alt="The Midnight Library book cover by Matt Haig" loading="lazy">
+                </div>
+              </div>
+              <span class="sample-label">A novel about choices and second chances</span>
+            </div>
+            <div class="monthly-copy ragamuffin-copy">
+              <div class="ragamuffin-badges"><span>Featured Selection</span><span>Literary Fiction</span></div>
+              <h2>The Midnight Library</h2>
+              <p class="ragamuffin-author">Matt Haig</p>
+              <p class="ragamuffin-description">Between life and death there is a library, and within that library, the shelves go on forever. Every book offers a chance to try another life you could have lived. A moving story about choices, regrets, hope, and discovering what makes life meaningful.</p>
+              <div class="ragamuffin-details">
+                <div class="ragamuffin-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M4 5.5v14A2.5 2.5 0 0 1 6.5 17H20M8 7h8"/></svg>
+                  <span><small>Genre</small><strong>Contemporary fiction</strong></span>
+                </div>
+                <div class="ragamuffin-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></svg>
+                  <span><small>Author</small><strong>Matt Haig</strong></span>
+                </div>
+                <div class="ragamuffin-detail">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 4 6v5c0 5 3.4 8.3 8 10 4.6-1.7 8-5 8-10V6z"/><path d="M8.5 12.5 11 15l5-6"/></svg>
+                  <span><small>Focus areas</small><strong>Choices · Regret · Hope</strong></span>
+                </div>
+              </div>
+              <a class="button ragamuffin-amazon" href="https://www.amazon.com/s?k=The+Midnight+Library+Matt+Haig" target="_blank" rel="noopener noreferrer">Discover This Book <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="world-reading">
+        <div class="wrap"><div class="section-head"><p class="eyebrow">Across borders</p><h2>Global Literary Perspectives.</h2><p class="section-intro">A shared reading table can bring distant places into closer conversation. These sample works open paths into distinct literary histories and lived experiences.</p></div><div class="world-grid">
+          <article class="world-card world-card--europe"><span class="world-card-number">01</span><div class="world-card-copy"><p class="eyebrow">Europe</p><h3>Ideas that travel through time.</h3><p>From philosophical fiction to contemporary stories of friendship and change.</p><span class="world-card-book">Sample works · Umberto Eco · Elena Ferrante</span></div></article>
+          <article class="world-card world-card--africa"><span class="world-card-number">02</span><div class="world-card-copy"><p class="eyebrow">Africa</p><h3>Stories across generations.</h3><p>Explore family, history, memory, and the many perspectives of African literature.</p><span class="world-card-book">Sample voice · Yaa Gyasi</span></div></article>
+          <article class="world-card world-card--asia"><span class="world-card-number">03</span><div class="world-card-copy"><p class="eyebrow">Asia</p><h3>New ways of seeing.</h3><p>Encounter intimate, imaginative writing shaped by diverse cultures and experiences.</p><span class="world-card-book">Sample voice · Han Kang</span></div></article>
+        </div><div class="section-action"><a class="button button--light" href="/about" data-route="/about">Explore our reading approach <span aria-hidden="true">↗</span></a></div></div>
+      </section>
+
+      <section class="honors">
+        <div class="wrap"><div class="section-head"><p class="eyebrow">Awards showcase</p><h2>Awards &amp; Recognition.</h2><p class="section-intro">Two illustrative 2026 award-card concepts. These are design examples, not verified Everest awards; recipient names and award status have not been provided.</p></div><div class="honors-grid">
+          <article class="honor-card honor-card--gold">
+            <div class="honor-trophy-stage">
+              <img class="honor-reference-image honor-reference-image--gold" src="award-1.png" alt="Black glass award plaque with a gold star, from the supplied Award 1 reference image" loading="lazy">
+            </div>
+            <div class="honor-information">
+              <div class="honor-badges"><span class="honor-badge honor-badge--gold">2026 Award · Concept</span><span class="honor-badge honor-badge--green">Leadership &amp; Excellence</span></div>
+              <h3>Global Excellence Award</h3>
+              <p class="honor-recipient">Recipient not specified</p>
+              <p class="honor-description">Recognising exceptional leadership, remarkable achievements, and outstanding contributions that inspire excellence and create meaningful impact across communities.</p>
+              <div class="honor-details">
+                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 14.8 8.7l6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"/></svg><span>Excellence in Leadership</span></div>
+                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M4 5.5v14A2.5 2.5 0 0 1 6.5 17H20"/></svg><span>Focus: Leadership &amp; Global Impact</span></div>
+              </div>
+            </div>
+          </article>
+          <article class="honor-card honor-card--blue">
+            <div class="honor-trophy-stage">
+              <img class="honor-reference-image honor-reference-image--blue" src="award-2.jpg" alt="Black glass award plaque with a sculpted gold star, from the supplied Award 2 reference image" loading="lazy">
+            </div>
+            <div class="honor-information">
+              <div class="honor-badges"><span class="honor-badge honor-badge--blue">2026 Award · Concept</span><span class="honor-badge honor-badge--cyan">Innovation &amp; Vision</span></div>
+              <h3>Visionary Achievement Award</h3>
+              <p class="honor-recipient">Recipient not specified</p>
+              <p class="honor-description">Celebrating innovative thinkers and visionary individuals whose creativity, dedication, and forward-thinking contributions are helping shape a brighter future.</p>
+              <div class="honor-details">
+                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3 14.8 8.7l6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"/></svg><span>Innovation in Achievement</span></div>
+                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M4 5.5v14A2.5 2.5 0 0 1 6.5 17H20"/></svg><span>Focus: Creativity &amp; Future Vision</span></div>
+              </div>
+            </div>
+          </article>
+        </div></div>
+      </section>
+
+      <section class="events">
+        <div class="wrap"><div class="section-head section-head--split"><div><p class="eyebrow">Upcoming events</p><h2>Gather Around Great Stories.</h2></div><p class="section-intro">Author conversations, reading circles, book discussions, and virtual gatherings belong here when confirmed.</p></div>
+          <article class="event-card event-card--upcoming event-card--featured"><img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Readers gathered around a table, illustrative event image" loading="lazy"><div class="event-card-content"><p class="eyebrow">Featured event · Details to be confirmed</p><h3>The Next Everest Literary Gathering</h3><p>Our next author conversation or shared reading event will be announced here when the speaker, format, and schedule are confirmed.</p><dl class="event-details"><div><dt>Date &amp; time</dt><dd>To be announced</dd></div><div><dt>Speaker</dt><dd>To be confirmed</dd></div><div><dt>Format</dt><dd>Event details pending</dd></div><div><dt>Registration</dt><dd>Not yet open</dd></div></dl><span class="event-status">Not yet scheduled</span><div class="event-card-actions"><a class="button button--gold" href="/events" data-route="/events">See event updates <span aria-hidden="true">↗</span></a></div></div></article>
+        </div>
+      </section>
+
+      <section class="past-gatherings">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow">Past Literary Gatherings</p>
+            <h2>Past Literary Gatherings</h2>
+            <p class="section-intro">Memorable moments from our recent discussions and events</p>
+          </div>
+          <div class="past-gathering-grid" id="past-gathering-grid"></div>
+        </div>
+      </section>
+
+      <section class="community">
+        <div class="wrap"><div class="section-head"><p class="eyebrow">Why join our community</p><h2>Find more in every story.</h2></div><div class="page-tiles community-grid">
+          <article class="page-tile"><h3>Curated Selection</h3><p>Explore reading suggestions across regions, eras, and literary traditions.</p></article><article class="page-tile"><h3>Global Community</h3><p>Share perspectives with readers from different places and cultures.</p></article><article class="page-tile"><h3>Deep Discussions</h3><p>Look beyond the page to themes, context, and interpretation.</p></article><article class="page-tile"><h3>Monthly Events</h3><p>Look out for virtual meetups, author conversations, and reading gatherings when scheduled.</p></article>
+        </div><div class="section-action"><a class="button button--gold" href="/join" data-route="/join">Join our community <span aria-hidden="true">↗</span></a></div></div>
+      </section>
+
+      <section class="journal">
+        <div class="wrap"><div class="section-head section-head--split"><div><p class="eyebrow">From our blog</p><h2>Reading ideas &amp; perspectives.</h2></div><p class="section-intro">Editorial previews for future Everest articles. These are concepts, not published posts.</p></div><div class="journal-grid">
+          <article class="journal-item"><div class="journal-image"><img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Books arranged on library shelves" loading="lazy"></div><div class="journal-copy"><p class="journal-meta">Literary perspectives <span>· Article preview</span></p><h3>How stories carry memory across generations</h3><p>A proposed reading note on family, history, and the ways literature holds the past.</p><a class="button button--small" href="/discussions" data-route="/discussions">Explore the discussion <span aria-hidden="true">↗</span></a></div></article>
+          <article class="journal-item"><div class="journal-image"><img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="An open book ready to be read" loading="lazy"></div><div class="journal-copy"><p class="journal-meta">Recommendations <span>· Article preview</span></p><h3>Finding your next translated read</h3><p>A future guide to discovering books that travel between languages and cultures.</p><a class="button button--small" href="/discussions" data-route="/discussions">Explore the discussion <span aria-hidden="true">↗</span></a></div></article>
+          <article class="journal-item"><div class="journal-image"><img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="A notebook and pen on a desk" loading="lazy"></div><div class="journal-copy"><p class="journal-meta">Reading insights <span>· Article preview</span></p><h3>Questions that open a book discussion</h3><p>A sample set of prompts for noticing character, language, setting, and point of view.</p><a class="button button--small" href="/discussions" data-route="/discussions">Explore the discussion <span aria-hidden="true">↗</span></a></div></article>
+        </div></div>
+      </section>
+
+      <section class="membership">
+        <div class="wrap membership-inner"><div><p class="eyebrow">Join Everest</p><h2>Ready to Start Your Literary Journey?</h2><p class="membership-copy">Meet readers, explore books, and discover perspectives beyond your usual shelf.</p></div><div><ul class="benefits"><li>Monthly book announcements and reading guides</li><li>Literary discussions and virtual meetups</li><li>Author interviews and literary content</li><li>Connections across countries and cultures</li></ul><a class="button button--gold" href="/join" data-route="/join">Join Us <span aria-hidden="true">↗</span></a></div></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-main">
+          <div><a class="brand footer-brand" href="/" data-route="/"><svg class="brand-mark" viewBox="0 0 40 42" aria-hidden="true"><path d="M2 36 15 13l5 8 6-12 12 27H2Z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m11 36 9-15 5 8 2-4 6 11M20 21l4-7 4 9" fill="none" stroke="#c9a86a" stroke-width="1.5"/><path d="M5 39h30" stroke="currentColor" stroke-width="1.5"/></svg><span><span class="brand-name">EVEREST</span><span class="brand-tag">Book Club</span></span></a><p class="footer-blurb">Where Great Stories Bring Us Together.</p></div>
+          <div><p class="footer-title">Explore Everest</p><nav class="footer-nav" aria-label="Footer navigation"><a href="/" data-route="/">Home</a><a href="/books" data-route="/books">Books</a><a href="/about" data-route="/about">About</a><a href="/discussions" data-route="/discussions">Discussions</a><a href="/events" data-route="/events">Events</a><a href="/join" data-route="/join">Join Us</a></nav></div>
+          <div><p class="footer-title">Community &amp; information</p><nav class="footer-nav" aria-label="Supporting pages"><a href="/guidelines" data-route="/guidelines">Community Guidelines</a><a href="/faq" data-route="/faq">FAQ</a><a href="/contact" data-route="/contact">Contact</a><a href="/terms" data-route="/terms">Terms &amp; Conditions</a><a href="/privacy" data-route="/privacy">Privacy Policy</a></nav><p class="footer-blurb">No public email address or official social accounts are configured for this preview.</p></div>
+        </div>
+        <div class="footer-bottom"><span>© <span id="current-year"></span> Everest Book Club.</span><span class="footer-social"><span>Made for readers, everywhere.</span></span></div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
