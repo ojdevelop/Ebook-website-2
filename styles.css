@@ -623,11 +623,13 @@
     .button--outline { border-color: var(--gold); background: transparent; color: var(--gold); }
     .button--outline:hover { background: var(--gold); color: var(--forest-deep); }
     .join-layout { display: grid; grid-template-columns: .9fr 1.1fr; gap: 65px; align-items: start; }
+    .join-layout > * { min-width: 0; }
     .join-layout h2 { font-size: 42px; }
     .membership-form { max-width: none; margin: 0; padding: 30px; border: 1px solid rgba(201,168,106,.22); background: rgba(255,255,255,.025); }
     .membership-form .eyebrow { margin: 0; }
     .membership-form label span { color: var(--muted); font-size: 9px; }
     .membership-form textarea { min-height: 100px; }
+    .membership-form .form-note, .membership-form .form-status { line-height: 1.6; overflow-wrap: anywhere; }
     .membership-benefits { grid-template-columns: 1fr; }
     .about-story, .about-mission { max-width: 850px; }
     .about-mission { margin-top: 65px; padding-top: 38px; border-top: 1px solid var(--line); }
@@ -647,6 +649,12 @@
       .honor-seal { width: 76px; height: 76px; }
     }
 
+    @media (max-width: 900px) {
+      .join-layout { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+      .join-layout > * { width: min(100%, 760px); justify-self: center; }
+      .membership-form { padding: 28px; }
+    }
+
     @media (max-width: 520px) {
       .reading-group { padding: 17px; }
       .reading-group .book-grid, .community-grid, .steps-grid { grid-template-columns: 1fr; }
@@ -657,9 +665,19 @@
       .featured-event-placeholder h3, .event-detail h3 { font-size: 26px; }
       .join-layout h2 { font-size: 36px; }
       .membership-form { padding: 22px 18px; }
+      .membership-form { gap: 16px; }
+      .membership-form label { gap: 7px; font-size: 11px; }
+      .membership-form input, .membership-form textarea { min-width: 0; min-height: 48px; padding: 13px 14px; font-size: 16px; }
+      .membership-form textarea { min-height: 160px; }
+      .membership-form .button { width: 100%; min-height: 52px; padding-inline: 14px; font-size: 12px; letter-spacing: .08em; }
+      .membership-form .form-note { margin-bottom: 0; font-size: 12px; }
       .honor-card { grid-template-columns: 1fr; }
       .discussion-toolbar h2 { font-size: 32px; }
       .discussion-topic { padding: 20px; }
+    }
+    @media (max-width: 360px) {
+      .footer-main { grid-template-columns: 1fr; }
+      .footer-main > :first-child { grid-column: auto; }
     }
 
     .reading-shelf-grid { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 20px 14px; }
