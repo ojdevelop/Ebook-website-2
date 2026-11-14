@@ -561,66 +561,13 @@ const featuredAuthors = [
 const communityStats = {
   members: "20,000+",
   booksDiscussed: "150+",
-  discussionTopics: "2,000+",
   authorEvents: "100+"
 };
 const communityStatDescriptions = {
   members: "Across 45 countries worldwide.",
   booksDiscussed: "From three continents.",
-  discussionTopics: "Engaging conversations daily.",
   authorEvents: "Exclusive Q&A sessions."
 };
-
-const discussionTopics = [
-  {
-    category: "current",
-    title: "How do love and freedom shape the choices in Kundera's novel?",
-    member: "Sample member",
-    book: "The Unbearable Lightness of Being",
-    replies: "Example only",
-    activity: "Sample activity"
-  },
-  {
-    category: "general",
-    title: "What makes a story feel rooted in a particular place?",
-    member: "Sample member",
-    book: "General conversation",
-    replies: "Example only",
-    activity: "Sample activity"
-  },
-  {
-    category: "tips",
-    title: "What helps you keep reading when a book feels challenging?",
-    member: "Sample member",
-    book: "Reading tips",
-    replies: "Example only",
-    activity: "Sample activity"
-  },
-  {
-    category: "current",
-    title: "Books, belief, and the pursuit of knowledge in The Name of the Rose",
-    member: "Sample member",
-    book: "The Name of the Rose",
-    replies: "Example only",
-    activity: "Sample activity"
-  },
-  {
-    category: "general",
-    title: "Which translated book changed how you see the world?",
-    member: "Sample member",
-    book: "General conversation",
-    replies: "Example only",
-    activity: "Sample activity"
-  },
-  {
-    category: "tips",
-    title: "How do you keep a reading journal?",
-    member: "Sample member",
-    book: "Reading tips",
-    replies: "Example only",
-    activity: "Sample activity"
-  }
-];
 
 const imageUrl = (image, width = 800) => image.startsWith("https://")
   ? image
@@ -633,7 +580,7 @@ const escapeHTML = (value) => String(value).replace(/[&<>"']/g, (character) => (
   "'": "&#39;"
 }[character]));
 const routeLink = (path, label, className = "text-link") =>
-  `<a class="${className}" href="${path}" data-route="${path}">${label}</a>`;
+  `<a class="${className}" href="${path === "/" ? "index.html" : path === "/books" ? "books.html" : path.startsWith("/books/") ? `books/${path.slice("/books/".length)}.html` : `${path.slice(1)}.html`}">${label}</a>`;
 const routeTitles = {
   "/books": "Our Book Collection",
   "/about": "About",
@@ -664,9 +611,9 @@ function bookCard(book, status) {
 }
 
 function literaryBookCard(book) {
-  const route = `/books/${book.slug}`;
+  const route = `books/${book.slug}.html`;
   const status = book.status[0].toUpperCase() + book.status.slice(1);
-  return `<a class="collection-book-card" href="${route}" data-route="${route}" data-book-category="${book.status}" aria-label="View details for ${escapeHTML(book.title)} by ${escapeHTML(book.author)}"><span class="collection-book-cover"><img src="${book.cover}" alt="Cover of ${escapeHTML(book.title)} by ${escapeHTML(book.author)}" loading="lazy"></span><span class="collection-book-copy"><span class="collection-book-meta"><span class="collection-book-status">${escapeHTML(status)}</span><span>${escapeHTML(book.region)}</span></span><span class="collection-book-title">${escapeHTML(book.title)}</span><span class="collection-book-author">${escapeHTML(book.author)} · ${book.year}</span><span class="collection-book-description">${escapeHTML(book.description)}</span><span class="collection-book-link">View Details <span aria-hidden="true">→</span></span></span></a>`;
+  return `<a class="collection-book-card" href="${route}" data-book-category="${book.status}" aria-label="View details for ${escapeHTML(book.title)} by ${escapeHTML(book.author)}"><span class="collection-book-cover"><img src="${book.cover}" alt="Cover of ${escapeHTML(book.title)} by ${escapeHTML(book.author)}" loading="lazy"></span><span class="collection-book-copy"><span class="collection-book-meta"><span class="collection-book-status">${escapeHTML(status)}</span><span>${escapeHTML(book.region)}</span></span><span class="collection-book-title">${escapeHTML(book.title)}</span><span class="collection-book-author">${escapeHTML(book.author)} · ${book.year}</span><span class="collection-book-description">${escapeHTML(book.description)}</span><span class="collection-book-link">View Details <span aria-hidden="true">→</span></span></span></a>`;
 }
 
 function pastGatheringCards(items) {
@@ -708,7 +655,7 @@ function featuredAuthorCards(items) {
 }
 
 function contactPage() {
-  return `${pageHero("Contact Everest", "We'd love to hear from you.", "There is no public email address or connected inbox for this preview. Prepare a message draft below and copy it into your email app.")}<section class="page-content page-content--paper"><div class="wrap contact-layout"><div><p class="eyebrow">Get in touch</p><h2>Questions, book ideas, or event suggestions.</h2><p class="section-intro">This form does not send or store information.</p></div><form class="contact-form draft-form"><label for="contact-name">Your name<input id="contact-name" name="name" autocomplete="name" required></label><label for="contact-email">Email address<input id="contact-email" name="email" type="email" autocomplete="email" required></label><label for="contact-subject">Subject<input id="contact-subject" name="subject" required></label><label for="contact-message">Your message<textarea id="contact-message" name="message" required></textarea></label><button class="button" type="submit">Prepare message draft</button><p class="contact-status" aria-live="polite"></p><label for="contact-draft">Message draft<textarea id="contact-draft" class="contact-draft" readonly hidden></textarea></label></form></div></section>`;
+  return `${pageHero("Contact Everest", "We'd love to hear from you.", "Questions, book ideas, or event suggestions? Send a message through Gmail using the Join Us page.")}<section class="page-content page-content--paper"><div class="wrap contact-layout"><div><p class="eyebrow">Get in touch</p><h2>We welcome your message.</h2><p class="section-intro">The Join Us page has the website's message form. It opens a prefilled Gmail draft addressed to <a href="mailto:signdesign1223@gmail.com">signdesign1223@gmail.com</a> for you to review and send.</p>${routeLink("/join", "Go to Join Us", "button button--gold")}</div></div></section>`;
 }
 
 function aboutPage() {
@@ -724,23 +671,15 @@ function aboutPage() {
     ["3", "Join the Conversation", "Take part in online discussions and virtual meetups when these are available."],
     ["4", "Explore Together", "Discover author interviews, historical context, and reading resources as they are published."]
   ];
-  return `${pageHero("About Everest Book Club", "A welcoming place to discover literature together.", "Everest Book Club is an independent reading project for readers curious about stories, cultures, and perspectives beyond their usual shelves.", "photo-1529156069898-49953e39b3ac")}<section class="page-content page-content--paper"><div class="wrap"><div class="about-story"><p class="eyebrow">Our story</p><h2>Many voices. Shared pages.</h2><p class="page-lead">Books can take us into lives and places we may never encounter firsthand. Everest Book Club is built around that possibility: readers come to a shared page with different experiences, questions, and points of view, and leave with a wider sense of the story and one another.</p><p class="about-body">Our reading shelf brings together classic and contemporary writing, translated works, and genre fiction from across Europe, Africa, and Asia. Rather than limiting reading to one language, period, or tradition, we make space for the contrasts and connections that emerge when books travel between cultures.</p><p class="about-body">Everest is an independent book-club project. Our public pages introduce sample books, literary voices, discussion prompts, and ways to participate. Announcements about selections, gatherings, and community activity should be treated as current only when they are specifically confirmed.</p></div><div class="about-mission"><p class="eyebrow">Our mission</p><h2>Make room for new perspectives.</h2><p class="section-intro">We aim to make thoughtful reading social, welcoming, and open to diverse literary traditions. A book club is not only about finishing a book; it is also about listening carefully, sharing interpretations, and staying curious when someone else sees a story differently.</p><p class="about-body">We value accessible conversation, respectful disagreement, and the freedom to read at an individual pace. Whether a reader joins for one title or follows a longer reading journey, the goal is the same: to find meaning together while honoring the richness of each work and its cultural context.</p></div><div class="page-subsection"><div class="section-head"><p class="eyebrow">What we read</p><h2>Four ways into a story.</h2><p class="section-intro">Our literary interests move between forms and traditions, following the books and questions that invite readers to look closer.</p></div><div class="page-tiles">${genres.map(([title, copy]) => `<article class="page-tile"><h3>${title}</h3><p>${copy}</p></article>`).join("")}</div></div><div class="about-reading-note"><h3>Reading across cultures</h3><p>Literature offers many routes into a culture: language, landscape, family life, politics, humor, belief, and memory. We approach each book as its own artistic work, not as a stand-in for an entire country or continent. Translations also deserve attention; a translator's choices help shape the voice that reaches us.</p><p>Our selections are intended to encourage exploration, not prescribe a single reading list. Readers are welcome to bring their own recommendations and to connect a book with other works, histories, or questions that matter to them.</p></div><div class="page-subsection"><div class="section-head"><p class="eyebrow">How it works</p><h2>Read, reflect, and explore.</h2></div><div class="steps-grid">${steps.map(([number, title, copy]) => `<article class="step-card"><span class="step-number">${number}</span><h3>${title}</h3><p>${copy}</p></article>`).join("")}</div></div><div class="page-callout"><div><h2>Come read with us.</h2><p>Membership details and a simple registration preview are on the Join Us page.</p></div>${routeLink("/join", "Join Us", "button button--gold")}</div></div></section>`;
-}
-
-function discussionCards(items) {
-  return items.map((topic, index) => `<article class="discussion-topic" data-topic-category="${topic.category}"${index >= 3 ? " hidden" : ""}><div><p class="eyebrow">${topic.category === "current" ? "Current Book" : topic.category === "tips" ? "Reading Tips" : "General"}</p><h3>${escapeHTML(topic.title)}</h3><p class="discussion-meta">${escapeHTML(topic.member)} <span>·</span> ${escapeHTML(topic.book)}</p><p class="discussion-activity">${escapeHTML(topic.replies)} replies · ${escapeHTML(topic.activity)}</p><details class="discussion-preview"><summary>View Discussion</summary><p>This is sample discussion content for layout preview only. It is not a live member post and replies are not connected.</p>${routeLink("/join", "Join Us to take part")}</details></div></article>`).join("");
-}
-
-function discussionsPage() {
-  return `${pageHero("Everest community", "Literary Discussions.", "Explore sample reading prompts and conversation categories. Member posts and replies are not connected in this preview.")}<section class="page-content page-content--paper"><div class="wrap"><div class="discussion-toolbar"><div><p class="eyebrow">Start a conversation</p><h2>Bring a question to the table.</h2></div><button class="button" id="discussion-start" type="button" aria-expanded="false" aria-controls="discussion-form-panel">Start New Discussion</button></div><p class="editorial-note">The topics below are examples, not live member activity. Names, reply counts, and recent activity are placeholders rather than community statistics.</p><div id="discussion-form-panel" class="discussion-form-panel" hidden><form class="local-form draft-form"><label for="discussion-name">Your name<input id="discussion-name" name="name" autocomplete="name" required></label><label for="discussion-title">Discussion topic<input id="discussion-title" name="topic" required></label><label for="discussion-category">Category<select id="discussion-category" name="category" required><option value="Current Book">Current Book</option><option value="General">General</option><option value="Reading Tips">Reading Tips</option></select></label><label for="discussion-book">Related book (optional)<input id="discussion-book" name="book"></label><button class="button" type="submit">Prepare discussion draft</button><p class="form-status" aria-live="polite"></p><label for="discussion-draft">Draft<textarea id="discussion-draft" class="contact-draft" readonly hidden></textarea></label></form></div><div class="discussion-filters" role="group" aria-label="Filter discussion topics"><button class="filter-chip is-active" type="button" data-category="all" aria-pressed="true">All Topics</button><button class="filter-chip" type="button" data-category="current" aria-pressed="false">Current Book</button><button class="filter-chip" type="button" data-category="general" aria-pressed="false">General</button><button class="filter-chip" type="button" data-category="tips" aria-pressed="false">Reading Tips</button></div><div class="discussion-list" id="discussion-list">${discussionCards(discussionTopics)}</div><button class="button button--outline" id="load-discussions" type="button" aria-expanded="false">Load More Discussions</button></div></section>`;
+  return `${pageHero("About Everest Book Club", "A welcoming place to discover literature together.", "Everest Book Club is an independent literary community for readers who love discovering meaningful stories, exploring different cultures, and experiencing fresh perspectives beyond familiar pages. It brings together a curiosity for literature, a passion for storytelling, and a shared appreciation for books that inspire thought, spark conversations, and open doors to new ways of seeing the world.", "photo-1529156069898-49953e39b3ac")}<section class="page-content page-content--paper"><div class="wrap"><div class="about-story"><p class="eyebrow">Our story</p><h2>Many voices. Shared pages.</h2><p class="page-lead">Books can take us into lives and places we may never encounter firsthand. Everest Book Club is built around that possibility: readers come to a shared page with different experiences, questions, and points of view, and leave with a wider sense of the story and one another.</p><p class="about-body">Our reading shelf brings together classic and contemporary writing, translated works, and genre fiction from across Europe, Africa, and Asia. Rather than limiting reading to one language, period, or tradition, we make space for the contrasts and connections that emerge when books travel between cultures.</p><p class="about-body">Everest is an independent book-club project. Our public pages introduce sample books, literary voices, discussion prompts, and ways to participate. Announcements about selections, gatherings, and community activity should be treated as current only when they are specifically confirmed.</p></div><div class="about-mission"><p class="eyebrow">Our mission</p><h2>Make room for new perspectives.</h2><p class="section-intro">We aim to make thoughtful reading social, welcoming, and open to diverse literary traditions. A book club is not only about finishing a book; it is also about listening carefully, sharing interpretations, and staying curious when someone else sees a story differently.</p><p class="about-body">We value accessible conversation, respectful disagreement, and the freedom to read at an individual pace. Whether a reader joins for one title or follows a longer reading journey, the goal is the same: to find meaning together while honoring the richness of each work and its cultural context.</p></div><div class="page-subsection"><div class="section-head"><p class="eyebrow">What we read</p><h2>Four ways into a story.</h2><p class="section-intro">Our literary interests move between forms and traditions, following the books and questions that invite readers to look closer.</p></div><div class="page-tiles">${genres.map(([title, copy]) => `<article class="page-tile"><h3>${title}</h3><p>${copy}</p></article>`).join("")}</div></div><div class="about-reading-note"><h3>Reading across cultures</h3><p>Literature offers many routes into a culture: language, landscape, family life, politics, humor, belief, and memory. We approach each book as its own artistic work, not as a stand-in for an entire country or continent. Translations also deserve attention; a translator's choices help shape the voice that reaches us.</p><p>Our selections are intended to encourage exploration, not prescribe a single reading list. Readers are welcome to bring their own recommendations and to connect a book with other works, histories, or questions that matter to them.</p></div><div class="page-subsection"><div class="section-head"><p class="eyebrow">How it works</p><h2>Read, reflect, and explore.</h2></div><div class="steps-grid">${steps.map(([number, title, copy]) => `<article class="step-card"><span class="step-number">${number}</span><h3>${title}</h3><p>${copy}</p></article>`).join("")}</div></div><div class="page-callout"><div><h2>Come read with us.</h2><p>Contact us through the Join Us page to ask about becoming part of the community.</p></div>${routeLink("/join", "Join Us", "button button--gold")}</div></div></section>`;
 }
 
 function eventsPage() {
-  return `${pageHero("Everest events", "Upcoming Events.", "Join a future book discussion, author conversation, or virtual literary gathering when dates and details are confirmed.", "photo-1511632765486-a01980e01a18")}<section class="page-content page-content--paper"><div class="wrap"><div class="section-head"><p class="eyebrow">Featured event</p><h2>Gather Around Great Stories.</h2></div><article class="event-detail"><div class="event-detail-image"><img src="${imageUrl("photo-1511632765486-a01980e01a18", 1000)}" alt="A group gathered for a conversation" loading="lazy"></div><div><h3>No confirmed Everest event is listed.</h3><p>There is no verified event title, author or speaker, date, time, venue, or registration information to publish yet.</p><p class="honest-note">Registration and Add to Calendar will appear here when an event is confirmed and the required service is available.</p></div></article><div class="page-subsection"><div class="section-head"><p class="eyebrow">Past events</p><h2>Literary Gatherings.</h2></div><p class="empty-state">No verified past event descriptions, dates, photographs, or attendance figures are available.</p></div><div class="page-subsection"><div class="contact-layout"><div><p class="eyebrow">Share an idea</p><h2>Want to Suggest an Event?</h2><p class="section-intro">Prepare an event suggestion for the Everest team. This static preview cannot send it.</p></div><form class="contact-form draft-form"><label for="event-name">Your name<input id="event-name" name="name" autocomplete="name" required></label><label for="event-email">Email address<input id="event-email" name="email" type="email" autocomplete="email" required></label><label for="event-idea">Event suggestion<textarea id="event-idea" name="suggestion" required></textarea></label><button class="button" type="submit">Prepare suggestion</button><p class="contact-status" aria-live="polite"></p><label for="event-draft">Suggestion draft<textarea id="event-draft" class="contact-draft" readonly hidden></textarea></label></form></div></div></div></section>`;
+  return `${pageHero("Everest events", "Upcoming Events.", "Join a future book discussion, author conversation, or virtual literary gathering when dates and details are confirmed.", "photo-1511632765486-a01980e01a18")}<section class="page-content page-content--paper"><div class="wrap"><div class="section-head"><p class="eyebrow">Featured event</p><h2>Gather Around Great Stories.</h2></div><article class="event-detail"><div class="event-detail-image"><img src="${imageUrl("photo-1511632765486-a01980e01a18", 1000)}" alt="A group gathered for a conversation" loading="lazy"></div><div><h3>No confirmed Everest event is listed.</h3><p>There is no verified event title, author or speaker, date, time, venue, or registration information to publish yet.</p><p class="honest-note">Registration and Add to Calendar will appear here when an event is confirmed and the required service is available.</p></div></article><div class="page-subsection"><div class="section-head"><p class="eyebrow">Past events</p><h2>Literary Gatherings.</h2></div><p class="empty-state">No verified past event descriptions, dates, photographs, or attendance figures are available.</p></div><div class="page-subsection"><p class="eyebrow">Share an idea</p><h2>Want to Suggest an Event?</h2><p class="section-intro">Share an event idea with Everest through the message form on the Join Us page.</p>${routeLink("/join", "Send a Message", "button button--gold")}</div></div></section>`;
 }
 
 function joinPage() {
-  return `${pageHero("Join Everest", "Join Our Community.", "A welcoming reading space for readers who want to discover books and exchange perspectives across cultures.")}<section class="page-content page-content--paper"><div class="wrap join-layout"><div><p class="eyebrow">What you'll get</p><h2>More ways to enjoy every book.</h2><ul class="benefits membership-benefits"><li>Monthly book announcements and reading guides</li><li>Literary discussions and virtual meetups</li><li>Author interviews and literary content</li><li>Connections with readers across countries and cultures</li></ul><p class="editorial-note">The registration form is a front-end preview. No account is created and information is not transmitted or saved.</p></div><form class="contact-form membership-form" id="membership-form"><p class="eyebrow">Membership registration</p><label for="join-name">Full Name<input id="join-name" name="name" autocomplete="name" required></label><label for="join-email">Email Address<input id="join-email" name="email" type="email" autocomplete="email" required></label><label for="join-country">Country<input id="join-country" name="country" autocomplete="country-name" required></label><label for="join-book">Favorite Book <span>(optional)</span><input id="join-book" name="favoriteBook"></label><label for="join-interests">Reading Interests <span>(optional)</span><textarea id="join-interests" name="interests"></textarea></label><button class="button button--gold" type="submit">Complete Registration</button><p class="form-status" id="membership-status" aria-live="polite"></p></form></div></section>`;
+  return `${pageHero("Join Everest", "Join Our Community.", "A welcoming reading space for readers who want to discover books and exchange perspectives across cultures.")}<section class="page-content page-content--paper"><div class="wrap join-layout"><div><p class="eyebrow">What you'll get</p><h2>More ways to enjoy every book.</h2><ul class="benefits membership-benefits"><li>Monthly book announcements and reading guides</li><li>Literary discussions and virtual meetups</li><li>Author interviews and literary content</li><li>Connections with readers across countries and cultures</li></ul><p class="editorial-note">Send a message to the Everest team through Gmail. Review your draft and send it from your Gmail account.</p></div><form class="contact-form membership-form" id="join-message-form"><p class="eyebrow">Send us a message</p><label for="join-name">Full Name<input id="join-name" name="name" autocomplete="name" required></label><label for="join-email">Gmail Address<input id="join-email" name="email" type="email" autocomplete="email" placeholder="you@gmail.com" required></label><label for="join-subject">Subject<input id="join-subject" name="subject" required></label><label for="join-message">Message<textarea id="join-message" name="message" required></textarea></label><p class="form-note">To send from this address, make sure you're signed in to it in Gmail. Your address will also be included in your message.</p><button class="button button--gold" type="submit">Send Message</button><p class="form-status" id="join-message-status" aria-live="polite"></p></form></div></section>`;
 }
 
 function supportingPage(path) {
@@ -751,11 +690,11 @@ function supportingPage(path) {
   if (path === "/faq") {
     const items = [
       ["What is Everest Book Club?", "An independent reading project for discovering literature and exchanging perspectives."],
-      ["How do I join?", "Use the Join Us form. This preview validates the form locally but does not transmit or store a registration."],
+      ["How do I join?", "Use the Join Us page to write a message. Gmail opens a draft for you to review and send from your account."],
       ["What kinds of books do you read?", "The reading collection can include classic and contemporary fiction, translated works, and genre fiction from different regions."],
       ["Do I need to read every book?", "No. Readers can choose the books and discussions that interest them."],
       ["When are events held?", "No recurring schedule is confirmed. Check the Events page for verified announcements."],
-      ["Can I suggest a book or event?", "Yes. Use the discussion draft or event suggestion form; neither is sent from this preview."]
+      ["Can I suggest a book or event?", "Yes. Share an idea in the message form on the Join Us page."]
     ];
     return `${pageHero("Help", "Frequently Asked Questions.", "A few practical details about reading and taking part with Everest.")}<section class="page-content page-content--paper"><div class="wrap faq-list">${items.map(([question, answer]) => `<details class="faq-item"><summary>${question}</summary><p>${answer}</p></details>`).join("")}${routeLink("/contact", "Contact Everest")}</div></section>`;
   }
@@ -772,7 +711,6 @@ function renderPage(path) {
   if (path === "/books") return bookCollectionPage();
   if (path.startsWith("/books/")) return literaryBookPage(path.slice("/books/".length));
   if (path === "/about") return aboutPage();
-  if (path === "/discussions") return discussionsPage();
   if (path === "/events") return eventsPage();
   if (path === "/join") return joinPage();
   return supportingPage(path);
@@ -790,7 +728,11 @@ function renderRoute(path, push = false) {
   }
 
   const normalizedPath = appPath.replace(/\/+$/, "") || "/";
-  const normalized = normalizedPath === "/membership" ? "/join" : normalizedPath;
+  const normalized = normalizedPath === "/membership"
+    ? "/join"
+    : normalizedPath === "/index.html"
+      ? "/"
+      : normalizedPath;
 
   if (push && location.protocol !== "file:") {
     const targetPath = `${basePath}${normalized === "/" ? "/" : normalized}`;
@@ -911,7 +853,6 @@ function initHomeData() {
     const labels = [
       ["members", "Active Members"],
       ["booksDiscussed", "Books Discussed"],
-      ["discussionTopics", "Discussion Topics"],
       ["authorEvents", "Author Events"]
     ];
     milestoneGrid.innerHTML = labels.map(([key, label]) => {
@@ -924,6 +865,10 @@ function initHomeData() {
   const year = document.getElementById("current-year");
   if (year) year.textContent = String(new Date().getFullYear());
   initializeMotion();
+}
+
+function initializeStandalonePage() {
+  initHomeData();
 }
 
 function setMobileMenuOpen(isOpen, restoreFocus = false) {
@@ -964,43 +909,27 @@ document.addEventListener("click", (event) => {
     count.textContent = `Showing ${visibleCount} ${visibleCount === 1 ? "book" : "books"}`;
     return;
   }
-  const startButton = target.closest("#discussion-start");
-  if (startButton) {
-    const panel = document.getElementById("discussion-form-panel");
-    const isOpen = panel.hidden;
-    panel.hidden = !isOpen;
-    startButton.setAttribute("aria-expanded", String(isOpen));
-    return;
-  }
-  const filter = target.closest(".filter-chip");
-  if (filter) {
-    const category = filter.dataset.category;
-    document.querySelectorAll(".filter-chip").forEach((button) => {
-      const active = button === filter;
+  const discussionFilter = target.closest("[data-discussion-filter]");
+  if (discussionFilter) {
+    const category = discussionFilter.dataset.discussionFilter;
+    document.querySelectorAll("[data-discussion-filter]").forEach((button) => {
+      const active = button === discussionFilter;
       button.classList.toggle("is-active", active);
       button.setAttribute("aria-pressed", String(active));
     });
-    const matches = [...document.querySelectorAll(".discussion-topic")]
-      .filter((topic) => category === "all" || topic.dataset.topicCategory === category);
-    document.querySelectorAll(".discussion-topic").forEach((topic) => {
-      topic.hidden = !matches.includes(topic);
+    const topics = [...document.querySelectorAll(".discussion-topic[data-topic-category]")];
+    let visibleCount = 0;
+    topics.forEach((topic) => {
+      topic.hidden = category !== "all" && topic.dataset.topicCategory !== category;
+      if (!topic.hidden) visibleCount += 1;
     });
-    const loadButton = document.getElementById("load-discussions");
-    loadButton.setAttribute("aria-expanded", "false");
-    loadButton.textContent = "Load More Discussions";
+    const status = document.getElementById("discussion-filter-status");
+    if (status) {
+      status.textContent = category === "all"
+        ? `Showing all ${visibleCount} discussions.`
+        : `Showing ${visibleCount} ${visibleCount === 1 ? "discussion" : "discussions"}.`;
+    }
     return;
-  }
-  const loadButton = target.closest("#load-discussions");
-  if (loadButton) {
-    const topics = [...document.querySelectorAll(".discussion-topic")];
-    const showingAll = loadButton.getAttribute("aria-expanded") === "true";
-    const activeCategory = document.querySelector(".filter-chip.is-active").dataset.category;
-    const matching = topics.filter((topic) => activeCategory === "all" || topic.dataset.topicCategory === activeCategory);
-    matching.forEach((topic, index) => {
-      topic.hidden = showingAll && index >= 3;
-    });
-    loadButton.setAttribute("aria-expanded", String(!showingAll));
-    loadButton.textContent = showingAll ? "Load More Discussions" : "Show Fewer Discussions";
   }
 });
 
@@ -1019,30 +948,57 @@ window.addEventListener("resize", () => {
   else if (document.querySelector(".mobile-nav").classList.contains("is-open")) setMobileMenuOpen(true);
 });
 
+document.addEventListener("input", (event) => {
+  const field = event.target;
+  if (!(field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) || field.form?.id !== "join-message-form") return;
+  if (field.value.trim()) field.setCustomValidity("");
+});
+
 document.addEventListener("submit", (event) => {
   const form = event.target;
-  if (!(form instanceof HTMLFormElement)) return;
-  if (form.id === "membership-form") {
-    event.preventDefault();
-    document.getElementById("membership-status").textContent = "Registration preview complete. Your details were validated in this browser but have not been transmitted or saved. Membership registration is not connected yet.";
-    form.reset();
-    return;
-  }
-  if (!form.classList.contains("draft-form")) return;
+  if (!(form instanceof HTMLFormElement) || form.id !== "join-message-form") return;
   event.preventDefault();
+  const requiredFields = [...form.querySelectorAll("[required]")];
+  requiredFields.forEach((field) => {
+    field.setCustomValidity(field.value.trim() ? "" : "Please fill out this field.");
+  });
+  if (!form.reportValidity()) return;
   const formData = new FormData(form);
-  const draft = form.querySelector(".contact-draft");
-  draft.value = [...formData.entries()]
-    .map(([name, value]) => `${name.replace(/([A-Z])/g, " $1").replace(/^./, (character) => character.toUpperCase())}: ${String(value).trim()}`)
-    .filter((line) => !line.endsWith(": "))
-    .join("\n\n");
-  draft.hidden = false;
-  const status = form.querySelector(".contact-status, .form-status");
-  if (status) status.textContent = "Draft prepared below. Copy it for your records; this website does not send or store it.";
+  const senderName = String(formData.get("name")).trim();
+  const senderEmail = String(formData.get("email")).trim();
+  const subject = String(formData.get("subject")).trim();
+  const message = String(formData.get("message")).trim();
+  const body = `Name: ${senderName}\nGmail: ${senderEmail}\n\n${message}`;
+  const composeUrl = new URL("https://mail.google.com/mail/");
+  composeUrl.search = new URLSearchParams({
+    view: "cm",
+    fs: "1",
+    to: "signdesign1223@gmail.com",
+    authuser: senderEmail,
+    su: subject,
+    body
+  }).toString();
+  const composeWindow = window.open(composeUrl.toString(), "_blank");
+  const status = document.getElementById("join-message-status");
+  if (composeWindow) {
+    composeWindow.opener = null;
+    status.textContent = "Gmail opened with your draft. Review it there and click Send when you're ready.";
+  } else {
+    status.textContent = "Your browser blocked a new tab. Gmail will open here with your draft.";
+    window.location.assign(composeUrl.toString());
+  }
 });
 
 window.addEventListener("popstate", () => {
-  renderRoute(location.protocol === "file:" ? "/" : location.pathname);
+  if (document.documentElement.dataset.page) {
+    initializeStandalonePage();
+  } else {
+    renderRoute(location.protocol === "file:" ? "/" : location.pathname);
+  }
 });
 
-renderRoute(location.protocol === "file:" ? "/" : location.pathname);
+if (document.documentElement.dataset.page) {
+  initializeStandalonePage();
+} else {
+  renderRoute(location.protocol === "file:" ? "/" : location.pathname);
+}
