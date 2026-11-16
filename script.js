@@ -871,6 +871,25 @@ function initializeStandalonePage() {
   initHomeData();
 }
 
+function buildGmailComposeUrl(senderEmail, subject, body) {
+  const composeUrl = new URL("https://mail.google.com/mail/");
+  composeUrl.search = new URLSearchParams({
+    view: "cm",
+    fs: "1",
+    to: "hello@everestbookclub.com",
+    authuser: senderEmail,
+    su: subject,
+    body
+  }).toString();
+  return composeUrl.toString();
+}
+
+function buildMailtoUrl(subject, body) {
+  const encodeField = (value) => encodeURIComponent(value.replace(/\r?\n/g, "\r\n"))
+    .replace(/[!'()*]/g, (character) => `%${character.charCodeAt(0).toString(16).toUpperCase()}`);
+  return `mailto:hello@everestbookclub.com?subject=${encodeField(subject)}&body=${encodeField(body)}`;
+}
+
 function setMobileMenuOpen(isOpen, restoreFocus = false) {
   const mobileNav = document.getElementById("mobile-nav");
   const menuToggle = document.querySelector(".menu-toggle");
@@ -969,23 +988,16 @@ document.addEventListener("submit", (event) => {
   const subject = String(formData.get("subject")).trim();
   const message = String(formData.get("message")).trim();
   const body = `Name: ${senderName}\nGmail: ${senderEmail}\n\n${message}`;
-  const composeUrl = new URL("https://mail.google.com/mail/");
-  composeUrl.search = new URLSearchParams({
-    view: "cm",
-    fs: "1",
-    to: "signdesign1223@gmail.com",
-    authuser: senderEmail,
-    su: subject,
-    body
-  }).toString();
-  const composeWindow = window.open(composeUrl.toString(), "_blank");
+  const composeUrl = buildGmailComposeUrl(senderEmail, subject, body);
+  const mailtoUrl = buildMailtoUrl(subject, body);
+  const composeWindow = window.open(composeUrl, "_blank");
   const status = document.getElementById("join-message-status");
   if (composeWindow) {
     composeWindow.opener = null;
-    status.textContent = "Gmail opened with your draft. Review it there and click Send when you're ready.";
+    status.textContent = "Gmail compose opened with your draft. Review it there and click Send when you're ready.";
   } else {
-    status.textContent = "Your browser blocked a new tab. Gmail will open here with your draft.";
-    window.location.assign(composeUrl.toString());
+    status.textContent = "Gmail couldn't open a new window. Opening your default email app with the same draft.";
+    window.location.assign(mailtoUrl);
   }
 });
 
